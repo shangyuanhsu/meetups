@@ -10,13 +10,14 @@
   <router-view />
 </template>
 <script>
-import { useStore } from "vuex";
+// import { useStore } from "vuex";
 
 export default {
   mounted() {
-    const store = useStore();
-     store.dispatch("get_room");
-  }
+    // const store = useStore();
+    // store.dispatch("get_room");
+   
+  },
 };
 </script>
 <style>

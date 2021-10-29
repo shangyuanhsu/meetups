@@ -31,7 +31,9 @@ export default {
     };
   },
   mounted() {
+
     const store = useStore();
+    store.dispatch("get_room");
     console.log(store.state.card_data);
     // this.card_arr = store.state.card_data;
   },
