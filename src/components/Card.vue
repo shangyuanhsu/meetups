@@ -3,7 +3,6 @@
     <div class="card_img">
       <img :src="img_src" />
     </div>
-
     <h2>{{ card_title }}</h2>
     <p>{{ card_address }}</p>
     <p>{{ card_description }}</p>
