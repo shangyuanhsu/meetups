@@ -1,22 +1,21 @@
 <template>
   <div class="Favorites">
     <HelloWorld msg="My Favorites" />
-    <Card
-      card_title="sea"
-      card_address="Test Address"
-      card_description="Test Description"
-      img_src="https://momentum.photos/img/66643dc8-1598-4d6c-a029-09f22969e3e1.jpg?momo_cache_bg_uuid=390f8491-2449-4c57-b1a1-be9e7cc8b939"
-    />
-    <Card
-      card_title="sea"
-      card_address="Test Address"
-      card_description="Test Description"
-      img_src="https://momentum.photos/img/66643dc8-1598-4d6c-a029-09f22969e3e1.jpg?momo_cache_bg_uuid=390f8491-2449-4c57-b1a1-be9e7cc8b939"
-    />
+     <slot v-for="item in getAll_card_data">
+      <Card
+        :card_title="item.title"
+        :card_address="item.address"
+        :card_description="item.description"
+        :img_src="item.src"
+        :card_key="item.room_id"
+        :status="item.status"
+      />
+    </slot>
   </div>
 </template>
 <script>
 // @ is an alias to /src
+import { useStore } from "vuex";
 import HelloWorld from "@/components/HelloWorld.vue";
 import Card from "@/components/Card.vue";
 export default {
@@ -24,6 +23,18 @@ export default {
   components: {
     HelloWorld,
     Card,
+  },
+  computed: {
+    getAll_card_data: function () {
+      const store = useStore();
+      const show_card = store.state.card_data;
+      const favorites_arr = store.state.favorites_arr;
+      const show_favorites_arr = show_card.filter((item) => {
+        return favorites_arr.indexOf(item.room_id) != -1
+      });
+       console.log(show_favorites_arr)
+      return show_favorites_arr;
+    },
   },
 };
 </script>

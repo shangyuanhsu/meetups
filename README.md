@@ -14,11 +14,8 @@ npm run serve
 ```
 npm run build
 ```
+================
 
-### Lints and fixes files
-```
-npm run lint
-```
+### vue.config.js 要改資料夾位置
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### api/connectbook.php 要改連線

@@ -6,7 +6,8 @@
     <h2>{{ card_title }}</h2>
     <p>{{ card_address }}</p>
     <p>{{ card_description }}</p>
-    <button @click="add_f(card_key)">To Favorites</button>
+    <button @click="add_f(card_key)" v-if="status == 0 ">To Favorites</button>
+    <button @click="add_f(card_key)" v-else-if="status == 1 ">remove Favorites</button>
   </div>
 </template>
 
@@ -18,7 +19,8 @@ export default {
     card_title: String,
     card_address: String,
     card_description: String,
-    card_key: Number,
+    card_key: String,
+    status: Number,
   },
   methods:{
       add_f(id){
