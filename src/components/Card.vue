@@ -6,8 +6,16 @@
     <h2>{{ card_title }}</h2>
     <p>{{ card_address }}</p>
     <p>{{ card_description }}</p>
-    <button @click="add_f(card_key)" v-if="status == 0 ">To Favorites</button>
-    <button @click="add_f(card_key)" v-else-if="status == 1 ">remove Favorites</button>
+    <button class="button_add" @click="add_f(card_key)" v-if="status == 0">
+      To Favorites
+    </button>
+    <button
+      class="button_remove"
+      @click="add_f(card_key)"
+      v-else-if="status == 1"
+    >
+      remove Favorites
+    </button>
   </div>
 </template>
 
@@ -22,11 +30,11 @@ export default {
     card_key: String,
     status: Number,
   },
-  methods:{
-      add_f(id){
-          console.log(id)
-      }
-  }
+  methods: {
+    add_f(id) {
+      console.log(id);
+    },
+  },
 };
 </script>
 
@@ -61,15 +69,26 @@ export default {
   font-size: 20px;
   padding: 10px;
   border-radius: 4px;
-  color: #77002e;
+  color: white;
   border: 1px solid #77002e;
-  background-color: white;
+  background-color: #77002e;
   outline: none;
   cursor: pointer;
   transition: all 0.5s;
 }
-.card button:hover {
+.card .button_remove {
+  color: #77002e;
+  border: 1px solid #77002e;
+  background-color: white;
+}
+.card .button_remove:hover {
   color: white;
   background-color: #77002e;
+}
+
+.card .button_add:hover {
+  color: #77002e;
+  background-color: white;
+  border: 1px solid #77002e;
 }
 </style>

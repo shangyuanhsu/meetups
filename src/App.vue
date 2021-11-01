@@ -1,21 +1,36 @@
 <template>
   <header>
-    <h1>Vue Meetups</h1>
+    <router-link to="/"> <h1>Vue Meetups</h1></router-link>
     <div id="nav">
-      <router-link to="/">All Meetups</router-link> |
+      <router-link to="/All_meetups">All Meetups</router-link> |
       <router-link to="/AddNew">Add New Meetup</router-link>|
       <router-link to="/Favorites">My Favorites</router-link>
     </div>
   </header>
   <router-view />
+  <Loading v-show="!is_loading" />
 </template>
 <script>
 import { useStore } from "vuex";
+import Loading from "@/components/Loading.vue";
 
 export default {
-  created() {
+  components: {
+    Loading,
+  },
+  data() {
+    return {};
+  },
+  mounted() {
     const store = useStore();
+    store.dispatch("do_load");
     store.dispatch("get_room");
+  },
+  computed: {
+    is_loading() {
+      const store = useStore();
+      return store.getters.get_is_loading;
+    },
   },
 };
 </script>
@@ -44,7 +59,11 @@ header {
   text-align: center;
   color: #3b3b3b;
 }
-
+header a{
+    font-weight: bold;
+  text-decoration: none;
+  color: #ffffff;
+}
 #nav a {
   display: inline-block;
   margin: 0 10px;

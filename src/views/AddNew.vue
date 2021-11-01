@@ -15,12 +15,16 @@
   </div>
 </template>
 <script>
+import { useStore } from "vuex";
 import HelloWorld from "@/components/HelloWorld.vue";
-
 export default {
   name: "Home",
   components: {
     HelloWorld,
+  },
+  mounted() {
+    const store = useStore();
+    store.dispatch("do_load");
   },
 };
 </script>
