@@ -21,7 +21,6 @@ export default createStore({
     },
     actions: {
         // 負責觸發 mutations
-
         // ajax 要在 Actions 裡面做，不可以在 Mutations 裡面做
         // 可處理非同步程式（e.g: 打 API）
         get_room({ commit }) {

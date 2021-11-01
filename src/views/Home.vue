@@ -1,21 +1,23 @@
 <template>
   <div class="home">
-    <HelloWorld msg="HOME" />
+    <HelloWorld msg="Home" />
   </div>
 </template>
 <script>
-// @ is an alias to /src
 import { useStore } from "vuex";
+import { onMounted } from "vue";
 import HelloWorld from "@/components/HelloWorld.vue";
 export default {
   name: "Home",
   components: {
-   HelloWorld,
+    HelloWorld,
   },
-    mounted() {
+  setup() {
     const store = useStore();
-    store.dispatch("do_load");
+    const get_loading = () => {
+      store.dispatch("do_load");
+    };
+    onMounted(get_loading);
   },
- 
 };
 </script>

@@ -16,6 +16,7 @@
 <script>
 // @ is an alias to /src
 import { useStore } from "vuex";
+import { onMounted, computed } from "vue";
 import HelloWorld from "@/components/HelloWorld.vue";
 import Card from "@/components/Card.vue";
 export default {
@@ -24,21 +25,26 @@ export default {
     HelloWorld,
     Card,
   },
-  mounted() {
+  setup() {
     const store = useStore();
-    store.dispatch("do_load");
-  },
-  computed: {
-    getAll_card_data: function () {
-      const store = useStore();
+    const get_loading = () => {
+      store.dispatch("do_load");
+    };
+    onMounted(get_loading);
+
+    const getAll_card_data = computed(() => {
       const show_card = store.state.card_data;
       const favorites_arr = store.state.favorites_arr;
       const show_favorites_arr = show_card.filter((item) => {
         return favorites_arr.indexOf(item.room_id) != -1;
       });
-      console.log(show_favorites_arr);
+
       return show_favorites_arr;
-    },
+    });
+
+    return {
+      getAll_card_data,
+    };
   },
 };
 </script>

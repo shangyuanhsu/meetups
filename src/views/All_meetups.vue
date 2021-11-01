@@ -17,6 +17,7 @@
 <script>
 // @ is an alias to /src
 import { useStore } from "vuex";
+import { onMounted, computed } from "vue";
 import HelloWorld from "@/components/HelloWorld.vue";
 import Card from "@/components/Card.vue";
 
@@ -26,18 +27,15 @@ export default {
     HelloWorld,
     Card,
   },
-  data() {
-    return {};
-  },
-  mounted() {
+  setup() {
     const store = useStore();
-    store.dispatch("do_load");
-    store.dispatch("get_room");
-  },
-  computed: {
-    getAll_card_data: function () {
-      const store = useStore();
+    const get_loading = () => {
+      store.dispatch("get_room");
+      store.dispatch("do_load");
+    };
+    onMounted(get_loading);
 
+    const getAll_card_data = computed(() => {
       const show_card = store.state.card_data;
       const favorites_arr = store.state.favorites_arr;
       show_card.forEach((item) => {
@@ -48,7 +46,12 @@ export default {
         }
       });
       return show_card;
-    },
+    });
+
+    return {
+      getAll_card_data,
+    };
   },
+
 };
 </script>

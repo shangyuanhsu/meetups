@@ -16,15 +16,19 @@
 </template>
 <script>
 import { useStore } from "vuex";
+import { onMounted } from "vue";
 import HelloWorld from "@/components/HelloWorld.vue";
 export default {
   name: "Home",
   components: {
     HelloWorld,
   },
-  mounted() {
+  setup() {
     const store = useStore();
-    store.dispatch("do_load");
+    const get_loading = () => {
+      store.dispatch("do_load");
+    };
+    onMounted(get_loading);
   },
 };
 </script>
@@ -68,7 +72,7 @@ button {
   background-color: white;
   outline: none;
   cursor: pointer;
-  transition: all .5s;
+  transition: all 0.5s;
 }
 button:hover {
   color: white;

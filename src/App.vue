@@ -12,25 +12,27 @@
 </template>
 <script>
 import { useStore } from "vuex";
+import { onMounted, computed } from "vue";
 import Loading from "@/components/Loading.vue";
 
 export default {
   components: {
     Loading,
   },
-  data() {
-    return {};
-  },
-  mounted() {
+  setup() {
     const store = useStore();
-    store.dispatch("do_load");
-    store.dispatch("get_room");
-  },
-  computed: {
-    is_loading() {
-      const store = useStore();
+    const get_loading = () => {
+      store.dispatch("do_load");
+    };
+    onMounted(get_loading);
+
+    const is_loading = computed(() => {
       return store.getters.get_is_loading;
-    },
+    });
+
+    return {
+      is_loading,
+    };
   },
 };
 </script>
@@ -59,8 +61,8 @@ header {
   text-align: center;
   color: #3b3b3b;
 }
-header a{
-    font-weight: bold;
+header a {
+  font-weight: bold;
   text-decoration: none;
   color: #ffffff;
 }
