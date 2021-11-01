@@ -7,17 +7,20 @@
       <h3>Meetup Image</h3>
       <input type="text" />
       <h3>Address</h3>
-      <input type="text" />
+      <GMapAutocomplete placeholder="" @place_changed="setPlace">
+      </GMapAutocomplete>
       <h3>Description</h3>
       <textarea></textarea>
-      <button>Add Meetup</button>
+      <button type="button">Add Meetup</button>
     </form>
   </div>
 </template>
+
 <script>
 import { useStore } from "vuex";
-import { onMounted } from "vue";
+import { reactive, onMounted } from "vue";
 import HelloWorld from "@/components/HelloWorld.vue";
+
 export default {
   name: "Home",
   components: {
@@ -29,10 +32,23 @@ export default {
       store.dispatch("do_load");
     };
     onMounted(get_loading);
+
+    const center = reactive({ lat: 51.093048, lng: 6.84212 });
+    const setPlace = (location) => {
+      console.log(location.formatted_address);
+    };
+
+    return {
+      center,
+      setPlace,
+    };
   },
 };
 </script>
 <style scoped>
+.vue-map-container {
+  height: 500px;
+}
 form {
   padding: 30px;
   width: 65%;
@@ -47,6 +63,7 @@ h3 {
   font-size: 20px;
 }
 input[type="text"],
+.pac-target-input,
 textarea {
   display: block;
   width: 100%;

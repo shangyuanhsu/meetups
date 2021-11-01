@@ -16,6 +16,8 @@ npm run build
 ```
 ================
 
-### vue.config.js 要改資料夾位置
+### vue.config.js 
+要改資料夾位置
 
-### api/connectbook.php 要改連線
+### api/connectbook.php 
+要改連線
