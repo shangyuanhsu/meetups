@@ -2,7 +2,8 @@
 require_once "connectbook.php";
 try {
     $sql_0 = "SELECT *
-    FROM meetups.meet_room;";
+    FROM meetups.meet_room
+    order by time desc;";
     $sth_0 = $pdo->prepare($sql_0);
     $sth_0->execute();
     $row_0 = $sth_0->fetchAll(PDO::FETCH_ASSOC);

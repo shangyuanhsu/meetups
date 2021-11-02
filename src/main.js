@@ -7,6 +7,7 @@ import VueGoogleMaps from '@fawmi/vue-google-maps'
 createApp(App).use(router).use(store).use(VueGoogleMaps, {
     load: {
         key: 'AIzaSyDzsvI1A7KVhOkKCGk9x-d67_w3nyzHDWs',
-        libraries: "places"
+        libraries: ["places","visualization"],
+        language:'zh-TW'
     },
 }).mount('#app')
