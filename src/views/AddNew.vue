@@ -89,9 +89,6 @@ export default {
       show_img.append(img);
     };
 
-    // const convert = (str) => {
-    
-    // };
     const upload_img = (e) => {
       if (e.target.files.length == 0) {
         return;
@@ -103,12 +100,6 @@ export default {
       }
       let file = e.target.files[0];
       image.value = file.name;
-
-      let reader = new FileReader();
-      reader.onload = () => {
-        // convert(reader.result);
-      };
-      reader.readAsText(file);
       upload_img2(e.target.files[0]);
     };
 
@@ -126,20 +117,23 @@ export default {
           alert("Address error");
         }
       } else {
-   
+        var formData = new FormData();
+        formData.append("file", document.querySelector("#image").files[0]);
+        formData.append("title", title.value);
+        formData.append("text", text.value);
+        formData.append("address", address.value);
+        formData.append("online", online.value);
+
         fetch("/api/insert_meetup.php", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json;charset=utf-8",
-          },
-          body: JSON.stringify({
-          
-          }),
+          body: formData,
         })
           .then((response) => {
             return response.json(); //json格式
           })
-          .then(() => {})
+          .then((data) => {
+            console.log(data)
+          })
           .catch((err) => {
             console.log("錯誤:", err);
           });
