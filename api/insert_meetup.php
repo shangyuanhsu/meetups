@@ -1,5 +1,6 @@
 <?php
 require_once "connectbook.php";
+require_once "config.php";
 $uid = 1;
 $title = $_POST['title'];
 $text = $_POST['text'];

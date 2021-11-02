@@ -1,0 +1,4 @@
+<?php
+
+$env = 'production'; // 'development'
+
