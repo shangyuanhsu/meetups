@@ -5,6 +5,8 @@ export default createStore({
         is_loading: false,
         card_data: [], // 卡片渲染
         favorites_arr: [], // 收藏
+        member: "member.png",
+        google:""
 
     },
     mutations: { // 負責改變 state 裏的資料

@@ -109,13 +109,10 @@ export default {
         alert("Title error");
       } else if (image.value == "") {
         alert("Image error");
-      }
-      if (text.value.replace(/\s*/g, "") == "") {
+      } else if (text.value.replace(/\s*/g, "") == "") {
         alert("Description error");
-      } else if (online.value == 0) {
-        if (address.value == "") {
-          alert("Address error");
-        }
+      } else if (online.value == 0 && address.value == "") {
+        alert("Address error");
       } else {
         var formData = new FormData();
         formData.append("file", document.querySelector("#image").files[0]);
@@ -132,7 +129,15 @@ export default {
             return response.json(); //json格式
           })
           .then((data) => {
-            console.log(data)
+            console.log(data);
+            if (data == "ok") {
+              store.dispatch("do_load");
+              setTimeout(() => {
+                location.href = "./#/All_meetups";
+              }, 1000);
+            } else {
+              alert("data error QQ Please try again");
+            }
           })
           .catch((err) => {
             console.log("錯誤:", err);

@@ -5,6 +5,9 @@
       <router-link to="/All_meetups">All Meetups</router-link> |
       <router-link to="/AddNew">Add New Meetup</router-link>|
       <router-link to="/Favorites">My Favorites</router-link>
+      <router-link to="/Login">
+        <img :src="require('./assets/img/member_img/' + member)" />
+      </router-link>
     </div>
   </header>
   <router-view />
@@ -12,8 +15,9 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { onMounted, computed } from "vue";
+import { ref, onMounted, computed } from "vue";
 import Loading from "@/components/Loading.vue";
+
 
 export default {
   components: {
@@ -21,10 +25,13 @@ export default {
   },
   setup() {
     const store = useStore();
+    const member = ref("");
     const get_loading = () => {
       store.dispatch("do_load");
     };
     onMounted(get_loading);
+
+    member.value = store.state.member;
 
     const is_loading = computed(() => {
       return store.getters.get_is_loading;
@@ -32,6 +39,7 @@ export default {
 
     return {
       is_loading,
+      member,
     };
   },
 };
@@ -66,16 +74,23 @@ header a {
   text-decoration: none;
   color: #ffffff;
 }
+#nav {
+  display: flex;
+  align-items: center;
+}
 #nav a {
-  display: inline-block;
   margin: 0 10px;
   font-weight: bold;
   text-decoration: none;
   color: #ffffff;
 }
 
-#nav a.router-link-exact-active {
+#nav a:not(:last-child).router-link-exact-active {
   color: #ffffff;
   border-bottom: 2px solid #ffffff;
+}
+
+#nav a img {
+  width: 30px;
 }
 </style>

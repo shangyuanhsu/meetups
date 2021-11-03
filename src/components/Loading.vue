@@ -1,8 +1,6 @@
 <template>
   <div class="loading">
-    <!-- <div id="loading" v-show="!is_loading"> -->
     <div class="loader">Loading...</div>
-    <!-- </div> -->
   </div>
 </template>
 

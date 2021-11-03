@@ -11,18 +11,37 @@ $name = $uid . "_" . strtotime("$NowTime,now");
 
 switch ($_FILES['file']['error']) {
     case UPLOAD_ERR_OK:
-        $dir = "../src/assets/img";
-        // $dir = "../img";
+
+        if ($env == 'development') {
+            $dir = "../src/assets/img/meetroom";
+        } else {
+            $dir = "../img/meetroom";
+        }
+
         if (file_exists($dir) == false) {
             mkdir($dir); //make directory
         }
 
         $from = $_FILES['file']['tmp_name'];
         $to = "$dir/" . $name . "." . explode("/", $_FILES['file']['type'])[1];
-      
+        $file_name =  $name . "." . explode("/", $_FILES['file']['type'])[1];
         if (copy($from, $to)) {
 
-            // var_dump($name . "." . explode("/", $_FILES['file']['type'])[1]);
+            $sql_0 = "INSERT INTO `meetups`.`meet_room` (`title`, `address`, `description`, `src`,`member_id`,`online`) 
+            VALUES (:title, :address,:text, :img,:uid, :online);";
+            $sth_0 = $pdo->prepare($sql_0);
+            $sth_0->bindValue(":title", $title);
+            if ($online == 1) {
+                $sth_0->bindValue(":address", "Online link will be announced soon");
+            } else {
+                $sth_0->bindValue(":address", $address);
+            }
+            $sth_0->bindValue(":text", $text);
+            $sth_0->bindValue(":img",  $file_name);
+            $sth_0->bindValue(":uid", $uid);
+            $sth_0->bindValue(":online", $online);
+            $sth_0->execute();
+
             echo json_encode("ok");
         } else {
             echo json_encode("error");

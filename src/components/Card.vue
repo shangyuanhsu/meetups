@@ -48,13 +48,14 @@ export default {
   overflow: hidden;
   box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
 }
-#card .card_img {
+.card .card_img {
   width: 100%;
-  height: 20rem;
+  height: 20em;
   overflow: hidden;
 }
 .card_img img {
   width: 100%;
+
 }
 .card h2 {
   font-size: 32px;

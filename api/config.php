@@ -1,4 +1,4 @@
 <?php
 
-$env = 'production'; // 'development'
+$env = 'development'; // 'production' / 'development'
 

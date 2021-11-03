@@ -6,7 +6,7 @@
         :card_title="item.title"
         :card_address="item.address"
         :card_description="item.description"
-        :img_src="item.src"
+        :img_src="require('../assets/img/meetroom/' + item.src)"
         :card_key="item.room_id"
         :status="item.status"
       />
