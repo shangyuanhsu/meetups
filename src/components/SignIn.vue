@@ -2,7 +2,10 @@
   <div class="signIn">
     <form>
       <h1>Sign in</h1>
-      <p>Already a member ? <span class="go_Login" @click="goto_Login">Log in</span></p>
+      <p>
+        Already a member ?
+        <span class="go_Login" @click="goto_Login">Log in</span>
+      </p>
       <h3>Your name</h3>
       <input
         type="text"
@@ -110,6 +113,29 @@ export default {
       }
     });
 
+    const insert_member = (is_google) => {
+      fetch("/api/insert_member.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+          name: name.value,
+          email: email.value,
+          password: password.value,
+          is_google:is_google
+        }),
+      })
+        .then((response) => {
+          return response.json(); //json格式
+        })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log("錯誤:", err);
+        });
+    };
     const go_sign = () => {
       if (name.value.replace(/\s+/g, "") == "") {
         is_error_name.value = true;
@@ -133,7 +159,7 @@ export default {
         !is_error_email.value &&
         !is_error_password.value
       ) {
-        alert("ok");
+        insert_member(0);
       }
     };
 
@@ -177,7 +203,7 @@ p {
 span {
   color: #77002e;
 }
-.go_Login{
+.go_Login {
   cursor: pointer;
 }
 .signIn div {
