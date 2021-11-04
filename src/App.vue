@@ -18,7 +18,6 @@ import { useStore } from "vuex";
 import { ref, onMounted, computed } from "vue";
 import Loading from "@/components/Loading.vue";
 
-
 export default {
   components: {
     Loading,
@@ -27,6 +26,7 @@ export default {
     const store = useStore();
     const member = ref("");
     const get_loading = () => {
+      store.dispatch("get_room");
       store.dispatch("do_load");
     };
     onMounted(get_loading);

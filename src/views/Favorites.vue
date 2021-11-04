@@ -8,7 +8,7 @@
         :card_description="item.description"
         :img_src="require('../assets/img/meetroom/' + item.src)"
         :card_key="item.room_id"
-        :status="item.status"
+        :status="item.status == 1 ? true : false"
       />
     </slot>
   </div>
@@ -34,9 +34,9 @@ export default {
 
     const getAll_card_data = computed(() => {
       const show_card = store.state.card_data;
-      const favorites_arr = store.state.favorites_arr;
+
       const show_favorites_arr = show_card.filter((item) => {
-        return favorites_arr.indexOf(item.room_id) != -1;
+        return item.status == 1;
       });
 
       return show_favorites_arr;

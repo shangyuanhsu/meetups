@@ -4,9 +4,9 @@ export default createStore({
     state: { // 所有在 store 裏的資料
         is_loading: false,
         card_data: [], // 卡片渲染
-        favorites_arr: [], // 收藏
-        member: "member.png",
-        google:""
+        member: "member.png",//預設頭像
+        user_id: "",//uid
+        which_login: "SignIn"//切分頁
 
     },
     mutations: { // 負責改變 state 裏的資料
@@ -19,38 +19,54 @@ export default createStore({
         is_loading(state, data) {
             state.is_loading = data;
             document.querySelector('body').style.overflow = "";
+        },
+        change_login(state, data) {
+            state.which_login = data;
         }
     },
     actions: {
         // 負責觸發 mutations
         // ajax 要在 Actions 裡面做，不可以在 Mutations 裡面做
         // 可處理非同步程式（e.g: 打 API）
+        //==================================================
+        // 撈meet的資料
         get_room({ commit }) {
             fetch('/api/get_room.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
                 },
+               
             }).then((response) => {
                 return response.json(); //json格式
             }).then((data) => {
                 commit('add_card_data', data['meet_room'])
-                commit('add_favorites_data', data['favorites'])
             }).catch((err) => {
                 console.log('錯誤:', err);
             })
         },
+        // loading 處理
         do_load({ commit }) {
             commit('is_loading', false);
             document.querySelector('body').style.overflow = "hidden";
             setTimeout(() => { commit('is_loading', true) }, 2000)
+        },
+        // 登入登出註冊component切換
+        go_change_login({ commit }, c_name) {
+            commit('change_login', c_name);
         }
 
     },
     getters: {
         // 像 computed 一樣？？，運算處理 state 資料
+        //==================================================
+        // 即時切換loading
         get_is_loading: state => {
             return state.is_loading
+        },
+        // 即時切換登入登出註冊component
+        get_which_login: state => {
+            return state.which_login
         }
 
     },

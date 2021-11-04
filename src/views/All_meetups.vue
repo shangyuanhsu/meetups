@@ -6,9 +6,9 @@
         :card_title="item.title"
         :card_address="item.address"
         :card_description="item.description"
-        :img_src="require('../assets/img/meetroom/'+item.src)"
+        :img_src="require('../assets/img/meetroom/' + item.src)"
         :card_key="item.room_id"
-        :status="item.status"
+        :status="item.status == 1 ? true : false"
       />
     </slot>
   </div>
@@ -30,21 +30,12 @@ export default {
   setup() {
     const store = useStore();
     const get_loading = () => {
-      store.dispatch("get_room");
       store.dispatch("do_load");
     };
     onMounted(get_loading);
 
     const getAll_card_data = computed(() => {
       const show_card = store.state.card_data;
-      const favorites_arr = store.state.favorites_arr;
-      show_card.forEach((item) => {
-        if (favorites_arr.indexOf(item.room_id) != -1) {
-          item.status = 1;
-        } else {
-          item.status = 0;
-        }
-      });
       return show_card;
     });
 

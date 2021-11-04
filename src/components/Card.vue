@@ -6,15 +6,12 @@
     <h2>{{ card_title }}</h2>
     <p>{{ card_address }}</p>
     <p>{{ card_description }}</p>
-    <button class="button_add" @click="add_f(card_key)" v-if="status == 0">
-      To Favorites
-    </button>
     <button
-      class="button_remove"
+      class="button_add"
+      :class="{ button_remove: status }"
       @click="add_f(card_key)"
-      v-else-if="status == 1"
     >
-      remove Favorites
+      {{ status ? "remove Favorites" : "To Favorites" }}
     </button>
   </div>
 </template>
@@ -28,12 +25,15 @@ export default {
     card_address: String,
     card_description: String,
     card_key: String,
-    status: Number,
+    status: Boolean,
   },
-  methods: {
-    add_f(id) {
+  setup() {
+    const add_f = (id) => {
       console.log(id);
-    },
+    };
+    return {
+      add_f,
+    };
   },
 };
 </script>
@@ -55,7 +55,6 @@ export default {
 }
 .card_img img {
   width: 100%;
-
 }
 .card h2 {
   font-size: 32px;
