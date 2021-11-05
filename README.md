@@ -21,3 +21,9 @@ npm run build
 
 ### api/connectbook.php 
 要改連線
+
+### api是php資料夾
+MAMP要指定資料夾在這個專案就可以了
+
+### meetups_db
+MySQL檔案在這裡
