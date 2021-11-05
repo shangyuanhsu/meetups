@@ -53,5 +53,14 @@ a {
   font-weight: bold;
   text-decoration: none;
   color: #3b3b3b;
+  display: block;
+  width: 65%;
+  max-width: 1000px;
+  margin: 40px auto;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
+  cursor: pointer;
 }
 </style>
