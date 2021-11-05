@@ -9,7 +9,7 @@
     <button
       class="button_add"
       :class="{ button_remove: status }"
-      @click="add_f(card_key)"
+      @click.stop.prevent="add_f(card_key)"
     >
       {{ status ? "remove Favorites" : "To Favorites" }}
     </button>
@@ -31,6 +31,7 @@ export default {
     const add_f = (id) => {
       console.log(id);
     };
+
     return {
       add_f,
     };
@@ -47,6 +48,7 @@ export default {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
+  cursor: pointer;
 }
 .card .card_img {
   width: 100%;

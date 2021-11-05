@@ -22,15 +22,11 @@ export default {
     // loading
     const get_loading = () => {
       store.dispatch("do_load");
+      store.dispatch("checked_user_id"); //會員有沒有登入啦!
     };
     onMounted(get_loading);
 
     //登入還是未登入
-    if (store.state.user_id) {
-      store.dispatch("go_change_login", "SignOut");
-    } else {
-      store.dispatch("go_change_login", "LogInBlock");
-    }
 
     // 判斷切換的component
     const is_login = computed(() => {

@@ -10,7 +10,8 @@
       <input
         type="text"
         :class="{ error: is_error_name }"
-        placeholder="10 characters"
+        placeholder="30 characters"
+        maxlength="30"
         v-model.trim="name"
         @focus="cancel_error('name')"
       />
@@ -68,22 +69,30 @@ export default {
     },
   },
   setup(props) {
+    // google登入用
     const { isSignIn } = toRefs(props);
     const Vue3GoogleOauth = inject("Vue3GoogleOauth");
 
+    const store = useStore();
+
+    // 輸入資料
     const name = ref("");
     const email = ref("");
     const password = ref("");
+    // 錯誤框框
     const is_error_name = ref(false);
     const is_error_email = ref(false);
     const is_error_password = ref(false);
 
-    const store = useStore();
-
+    // 去login
     const goto_Login = () => {
+      if (name.value || email.value || password.value) {
+        alert("Are you sure ? Data will be cleared");
+      }
       store.dispatch("go_change_login", "LogInBlock");
     };
 
+    // 使用者點到框框就消除紅框框
     const cancel_error = (which) => {
       switch (which) {
         case "name":
@@ -97,6 +106,8 @@ export default {
           break;
       }
     };
+
+    // 驗證密碼
     const password_result = computed(() => {
       if (password.value != "") {
         let score = password.value.length;
@@ -113,6 +124,7 @@ export default {
       }
     });
 
+    // 進php驗證資料與寫入資料
     const insert_member = (is_google) => {
       fetch("/api/insert_member.php", {
         method: "POST",
@@ -123,21 +135,37 @@ export default {
           name: name.value,
           email: email.value,
           password: password.value,
-          is_google:is_google
+          is_google: is_google,
         }),
       })
         .then((response) => {
           return response.json(); //json格式
         })
         .then((data) => {
-          console.log(data);
+          if (data == "errorH") {
+            alert("This email has already been registered !");
+            store.dispatch("do_load");
+            store.dispatch("go_change_login", "LogInBlock");
+          } else if (data == "errorN") {
+            is_error_name.value = true;
+          } else if (data == "errorE") {
+            is_error_email.value = true;
+          } else if (data == "errorP") {
+            is_error_password.value = true;
+          } else {
+            store.dispatch("inser_member_id", data);
+            store.dispatch("do_load");
+            location.href = "./#/All_meetups";
+          }
         })
         .catch((err) => {
           console.log("錯誤:", err);
         });
     };
+
+    // 按sign in
     const go_sign = () => {
-      if (name.value.replace(/\s+/g, "") == "") {
+      if (name.value == "") {
         is_error_name.value = true;
       }
 
@@ -159,7 +187,7 @@ export default {
         !is_error_email.value &&
         !is_error_password.value
       ) {
-        insert_member(0);
+        insert_member(0); //0 : 表示是用email登入
       }
     };
 

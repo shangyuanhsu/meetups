@@ -13,15 +13,16 @@ export default createStore({
         add_card_data(state, data) {
             state.card_data = data;
         },
-        add_favorites_data(state, data) {
-            state.favorites_arr = data;
-        },
+
         is_loading(state, data) {
             state.is_loading = data;
             document.querySelector('body').style.overflow = "";
         },
         change_login(state, data) {
             state.which_login = data;
+        },
+        change_member(state, data) {
+            state.user_id = data;
         }
     },
     actions: {
@@ -36,7 +37,7 @@ export default createStore({
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
                 },
-               
+
             }).then((response) => {
                 return response.json(); //json格式
             }).then((data) => {
@@ -50,10 +51,81 @@ export default createStore({
             commit('is_loading', false);
             document.querySelector('body').style.overflow = "hidden";
             setTimeout(() => { commit('is_loading', true) }, 2000)
+
         },
         // 登入登出註冊component切換
         go_change_login({ commit }, c_name) {
             commit('change_login', c_name);
+        },
+    
+        //checked session
+        checked_user_id({ commit }) {
+            fetch("/api/session.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json;charset=utf-8",
+                },
+            })
+                .then((response) => {
+                    return response.json(); //json格式
+                })
+                .then((data) => {
+                    if (data != "no") {
+                        commit('change_member', data);
+                        commit('change_login', "SignOut");
+                    } else {
+                        commit('change_login', "LogInBlock");
+                    }
+
+                })
+                .catch((err) => {
+                    console.log("錯誤:", err);
+                });
+        },
+        //session start
+        inser_member_id({ commit }, uid) {
+            fetch("/api/session_start.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json;charset=utf-8",
+                },
+                body: JSON.stringify({
+                    member_id: uid,
+                }),
+            })
+                .then((response) => {
+                    return response.json(); //json格式
+                })
+                .then((data) => {
+                    if (data == "ok") {
+                        commit('change_member', uid);
+                    }
+                })
+                .catch((err) => {
+                    console.log("錯誤:", err);
+                });
+
+        },
+        //session destroy
+        bye_user_id({ commit }) {
+            fetch("/api/session_bye.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json;charset=utf-8",
+                },
+            })
+                .then((response) => {
+                    return response.json(); //json格式
+                })
+                .then((data) => {
+                    console.log(data);
+                    commit('change_member', "");
+
+                })
+                .catch((err) => {
+                    console.log("錯誤:", err);
+                });
+
         }
 
     },
@@ -67,7 +139,8 @@ export default createStore({
         // 即時切換登入登出註冊component
         get_which_login: state => {
             return state.which_login
-        }
+        },
+
 
     },
     modules: {

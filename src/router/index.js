@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import All_meetups from '../views/All_meetups.vue'
 import Login from '../views/Login.vue'
+import CardContent from '../views/CardContent.vue'
 
 const routes = [
   {
@@ -18,6 +19,17 @@ const routes = [
     path: '/All_meetups',
     name: 'All_meetups',
     component: All_meetups
+  },
+  {
+    path: '/CardContent/:path',
+    name: 'CardContent',
+    component: CardContent,
+    children: [
+      { path: "1", component: CardContent },
+      { path: "2", component: CardContent },
+      { path: "3", component: CardContent }
+    ],
+    props: true
   },
   {
     path: '/AddNew',

@@ -26,7 +26,7 @@ export default {
     const store = useStore();
     const member = ref("");
     const get_loading = () => {
-      store.dispatch("get_room");
+      // 現在有沒有登入
       store.dispatch("do_load");
     };
     onMounted(get_loading);

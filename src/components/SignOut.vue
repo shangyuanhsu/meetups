@@ -2,12 +2,13 @@
   <div class="signOut">
     <form>
       <h1>Member</h1>
-      <button type="button" @click="handleClickSignOut">sign out</button>
+      <!-- <button type="button" @click="handleClickSignOut">sign out</button> -->
+      <button type="button" @click="sign_out">sign out</button>
     </form>
   </div>
 </template>
 <script>
-// import { useStore } from "vuex";
+import { useStore } from "vuex";
 // import { ref, onMounted } from "vue";
 import { inject, toRefs } from "vue";
 
@@ -29,11 +30,16 @@ export default {
     const { isSignIn } = toRefs(props);
     const Vue3GoogleOauth = inject("Vue3GoogleOauth");
 
-    // const store = useStore();
+    const store = useStore();
+    const sign_out = () => {
+      store.dispatch("bye_user_id");
+      location.href = "./#/All_meetups";
+    };
 
     return {
       Vue3GoogleOauth,
       isSignIn,
+      sign_out,
     };
   },
 };

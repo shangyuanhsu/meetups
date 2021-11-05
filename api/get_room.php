@@ -1,9 +1,11 @@
 <?php
+session_start();
 require_once "connectbook.php";
 
-$uid = 1;
+$uid = isset($_SESSION['uid']) ? $_SESSION['uid'] : 0;
 
 try {
+
     $sql_0 = "SELECT t1.room_id,t1.title,t1.address,t1.description,t1.src,t1.time,t1.online,t2.status
     FROM meetups.meet_room as t1 
     LEFT JOIN (

@@ -11,6 +11,7 @@
         :status="item.status == 1 ? true : false"
       />
     </slot>
+    
   </div>
 </template>
 <script>
@@ -28,6 +29,7 @@ export default {
   setup() {
     const store = useStore();
     const get_loading = () => {
+      store.dispatch("get_room");
       store.dispatch("do_load");
     };
     onMounted(get_loading);

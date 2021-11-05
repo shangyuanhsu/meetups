@@ -5,21 +5,32 @@ $all_fetch = trim(file_get_contents("php://input"));
 $decoded = json_decode($all_fetch, true);
 
 $name = $decoded['name'];
-$email = $decoded['email'];
+$email = filter_var($decoded['email'], FILTER_SANITIZE_EMAIL);
 $password = $decoded['password'];
 $is_google = $decoded['is_google'];
 $hash = password_hash($password, PASSWORD_DEFAULT);
 
-// $2y$10$0f65mYQOTBWX4kVKMbBDaOtbH5mswfFUGStb0mYeW7sKZnyJ.sOZa
-
-// if (password_verify($password, "$2y$10$0f65mYQOTBWX4kVKMbBDaOtbH5mswfFUGStb0mYeW7sKZnyJ.sOZa")) {
-//     echo 'Password is valid!';
-// } else {
-//     echo 'Invalid password.';
-// }
-
-
 try {
+
+
+
+    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo json_encode("errorE"); //信箱錯誤
+        die;
+    }
+
+    if (empty($name) || strlen($name) > 30) {
+        echo json_encode("errorN"); //名字錯誤
+        die;
+    }
+    
+    if (empty($password)) {
+        echo json_encode("errorP"); //密碼錯誤
+        die;
+    }
+
+
+
     $sql_0 = "SELECT * FROM meetups.member where email = :email;";
     $sth_0 = $pdo->prepare($sql_0);
     $sth_0->bindValue(":email", $email);
@@ -34,7 +45,7 @@ try {
         $sth_1->bindValue(":email", $email);
 
         if ($is_google == 1) {
-            $sth_1->bindValue(":password", "0");
+            $sth_1->bindValue(":password", null);
         } else {
             $sth_1->bindValue(":password", $hash);
         }
@@ -48,9 +59,9 @@ try {
         $sth_2->execute();
         $row_2 = $sth_2->fetch(PDO::FETCH_ASSOC);
 
-        echo json_encode($row_2['member_id']);
+        echo json_encode($row_2['member_id']); // 順利註冊，回傳新創立的uid
     } else {
-        echo json_encode("已經註冊過了!");
+        echo json_encode("errorH"); // 已經註冊過
     }
 } catch (PDOException $e) {
     echo "資料庫連線失敗！錯誤訊息：", $e->getMessage();
