@@ -50,7 +50,7 @@ form {
   padding: 30px;
   width: 65%;
   max-width: 1000px;
-  margin: 40px auto;
+  margin: 40px auto 80px auto;
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
