@@ -121,6 +121,7 @@ export default {
         formData.append("address", address.value);
         formData.append("online", online.value);
 
+// console.log(formData)
         fetch("/api/insert_meetup.php", {
           method: "POST",
           body: formData,
