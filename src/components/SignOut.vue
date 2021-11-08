@@ -33,7 +33,7 @@ export default {
     const store = useStore();
     const sign_out = () => {
       store.dispatch("bye_user_id");
-      location.href = "./#/All_meetups";
+      location.href = "./All_meetups";
     };
 
     return {

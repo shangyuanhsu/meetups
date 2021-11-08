@@ -57,7 +57,7 @@ export default createStore({
         go_change_login({ commit }, c_name) {
             commit('change_login', c_name);
         },
-    
+
         //checked session
         checked_user_id({ commit }) {
             fetch("/api/session.php", {
@@ -127,6 +127,7 @@ export default createStore({
                 });
 
         }
+
 
     },
     getters: {

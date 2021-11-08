@@ -117,6 +117,7 @@ export default {
           } else {
             alert(`welcome ${data.member_name}`);
             store.dispatch("inser_member_id", data.member_id);
+            location.reload();
           }
         })
         .catch((err) => {

@@ -2,16 +2,17 @@
   <div class="Favorites">
     <HelloWorld msg="My Favorites" />
     <slot v-for="item in getAll_card_data">
-      <Card
-        :card_title="item.title"
-        :card_address="item.address"
-        :card_description="item.description"
-        :img_src="require('../assets/img/meetroom/' + item.src)"
-        :card_key="item.room_id"
-        :status="item.status == 1 ? true : false"
-      />
+      <router-link :to="`/CardContent/${item.room_id}`">
+        <Card
+          :card_title="item.title"
+          :card_address="item.address"
+          :card_description="item.description"
+          :img_src="require('../assets/img/meetroom/' + item.src)"
+          :card_key="item.room_id"
+          :status="item.status == 1 ? true : false"
+        />
+      </router-link>
     </slot>
-    
   </div>
 </template>
 <script>
@@ -50,3 +51,19 @@ export default {
   },
 };
 </script>
+<style scoped>
+a {
+  font-weight: bold;
+  text-decoration: none;
+  color: #3b3b3b;
+  display: block;
+  width: 65%;
+  max-width: 1000px;
+  margin: 40px auto;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
+  cursor: pointer;
+}
+</style>

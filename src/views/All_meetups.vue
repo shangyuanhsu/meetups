@@ -37,6 +37,7 @@ export default {
     };
     onMounted(get_loading);
 
+
     const getAll_card_data = computed(() => {
       const show_card = store.state.card_data;
       return show_card;

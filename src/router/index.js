@@ -3,8 +3,14 @@ import Home from '../views/Home.vue'
 import All_meetups from '../views/All_meetups.vue'
 import Login from '../views/Login.vue'
 import CardContent from '../views/CardContent.vue'
+import NotFound from '../views/NotFound.vue'
 
 const routes = [
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFound
+  },
   {
     path: '/',
     name: 'Home',
@@ -24,12 +30,7 @@ const routes = [
     path: '/CardContent/:path',
     name: 'CardContent',
     component: CardContent,
-    children: [
-      { path: "1", component: CardContent },
-      { path: "2", component: CardContent },
-      { path: "3", component: CardContent }
-    ],
-    props: true
+    // props: true
   },
   {
     path: '/AddNew',

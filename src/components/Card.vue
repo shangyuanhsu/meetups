@@ -9,7 +9,7 @@
     <button
       class="button_add"
       :class="{ button_remove: status }"
-      @click.stop.prevent="add_f(card_key)"
+      @click.stop.prevent="add_remove_card(card_key, status)"
     >
       {{ status ? "remove Favorites" : "To Favorites" }}
     </button>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+// import { useStore } from "vuex";
 export default {
   name: "Card",
   props: {
@@ -28,19 +29,47 @@ export default {
     status: Boolean,
   },
   setup() {
-    const add_f = (id) => {
-      console.log(id);
+    // const store = useStore();
+    const no_login = () => {
+      let ans = confirm("還沒有登入或註冊嗎?");
+      if (ans) {
+        location.href = `./Login`;
+      }
+    };
+
+    const add_remove_card = (id, status) => {
+      fetch("/api/change_favorite.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+          room_id: id,
+          status: status,
+        }),
+      })
+        .then((response) => {
+          return response.json(); //json格式
+        })
+        .then((data) => {
+          console.log(data);
+          if (data == "error") {
+            no_login();
+          }
+        })
+        .catch((err) => {
+          console.log("錯誤:", err);
+        });
     };
 
     return {
-      add_f,
+      add_remove_card,
     };
   },
 };
 </script>
 
 <style scoped>
-
 .card .card_img {
   width: 100%;
   height: 20em;
