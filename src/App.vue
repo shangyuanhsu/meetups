@@ -3,7 +3,7 @@
     <router-link to="/"> <h1>Vue Meetups</h1></router-link>
     <div id="nav">
       <router-link to="/All_meetups">All Meetups</router-link> |
-      <router-link to="/AddNew">Add New Meetup</router-link>|
+      <router-link to="/AddNew">Add New Meetup</router-link> |
       <router-link to="/Favorites">My Favorites</router-link>
       <router-link to="/Login">
         <img :src="require('./assets/img/member_img/' + member)" />
@@ -24,15 +24,17 @@ export default {
   },
   setup() {
     const store = useStore();
-    const member = ref("");
+    const member = ref(""); // 會員頭像
     const get_loading = () => {
       // 現在有沒有登入
       store.dispatch("do_load");
     };
     onMounted(get_loading);
 
+    // 之後要去抓會員頭像
     member.value = store.state.member;
 
+    // 是否loading
     const is_loading = computed(() => {
       return store.getters.get_is_loading;
     });
@@ -49,6 +51,7 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  text-align: left;
 }
 body {
   background-color: #fcf3f6;

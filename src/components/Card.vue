@@ -17,7 +17,7 @@
 </template>
 
 <script>
-// import { useStore } from "vuex";
+import { useStore } from "vuex";
 export default {
   name: "Card",
   props: {
@@ -29,7 +29,7 @@ export default {
     status: Boolean,
   },
   setup() {
-    // const store = useStore();
+    const store = useStore();
     const no_login = () => {
       let ans = confirm("還沒有登入或註冊嗎?");
       if (ans) {
@@ -52,9 +52,10 @@ export default {
           return response.json(); //json格式
         })
         .then((data) => {
-          console.log(data);
-          if (data == "error") {
+          if (data.status == "errorLogin") {
             no_login();
+          } else {
+            store.dispatch("get_room");
           }
         })
         .catch((err) => {

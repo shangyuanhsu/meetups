@@ -77,10 +77,12 @@ export default {
     };
     onMounted(get_loading);
 
+    // 地點
     const setPlace = (location) => {
       address.value = location.formatted_address;
     };
 
+    // 預覽圖2
     const upload_img2 = (url) => {
       const show_img = document.querySelector("#show_img");
       const img = new Image();
@@ -88,12 +90,11 @@ export default {
       img.style.width = "100%";
       show_img.append(img);
     };
-
+    // 預覽圖1
     const upload_img = (e) => {
       if (e.target.files.length == 0) {
         return;
       }
-
       if (e.target.files[0].type.split("/")[0] != "image") {
         alert("File error");
         return;
@@ -121,7 +122,6 @@ export default {
         formData.append("address", address.value);
         formData.append("online", online.value);
 
-// console.log(formData)
         fetch("/api/insert_meetup.php", {
           method: "POST",
           body: formData,
@@ -134,7 +134,7 @@ export default {
             if (data == "ok") {
               store.dispatch("do_load");
               setTimeout(() => {
-                location.href = "./#/All_meetups";
+                location.href = "./All_meetups";
               }, 1000);
             } else {
               alert("data error QQ Please try again");
@@ -163,11 +163,14 @@ export default {
 .vue-map-container {
   height: 500px;
 }
+.addNew{
+ width: 65%;
+  max-width: 1000px;
+    margin: 40px auto 80px auto;
+}
 form {
   padding: 30px;
-  width: 65%;
-  max-width: 1000px;
-  margin: 40px auto 80px auto;
+
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
@@ -194,7 +197,7 @@ textarea {
   resize: none;
   height: 150px;
 }
-input[type="radio"]{
+input[type="radio"] {
   margin-right: 4px;
   vertical-align: middle;
 }

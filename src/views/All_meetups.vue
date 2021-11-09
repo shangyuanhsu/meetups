@@ -37,7 +37,7 @@ export default {
     };
     onMounted(get_loading);
 
-
+    // meetups渲染
     const getAll_card_data = computed(() => {
       const show_card = store.state.card_data;
       return show_card;
@@ -50,13 +50,17 @@ export default {
 };
 </script>
 <style scoped>
+.all_meetups {
+  width: 65%;
+  max-width: 1000px;
+  margin: 40px auto 80px auto;
+}
 a {
   font-weight: bold;
   text-decoration: none;
   color: #3b3b3b;
   display: block;
-  width: 65%;
-  max-width: 1000px;
+
   margin: 40px auto;
   background: white;
   border-radius: 12px;

@@ -1,5 +1,5 @@
 <template>
-  <div class="Favorites">
+  <div class="favorites">
     <HelloWorld msg="My Favorites" />
     <slot v-for="item in getAll_card_data">
       <router-link :to="`/CardContent/${item.room_id}`">
@@ -13,6 +13,7 @@
         />
       </router-link>
     </slot>
+    <p v-if="getAll_card_data.length == 0">No collection yet</p>
   </div>
 </template>
 <script>
@@ -29,12 +30,14 @@ export default {
   },
   setup() {
     const store = useStore();
+
     const get_loading = () => {
       store.dispatch("get_room");
       store.dispatch("do_load");
     };
     onMounted(get_loading);
 
+    // 收藏的meetups
     const getAll_card_data = computed(() => {
       const show_card = store.state.card_data;
 
@@ -52,18 +55,25 @@ export default {
 };
 </script>
 <style scoped>
+.favorites {
+  width: 65%;
+  max-width: 1000px;
+  margin: 40px auto 80px auto;
+}
 a {
   font-weight: bold;
   text-decoration: none;
   color: #3b3b3b;
   display: block;
-  width: 65%;
-  max-width: 1000px;
+
   margin: 40px auto;
   background: white;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
   cursor: pointer;
+}
+p{
+  text-align: left;
 }
 </style>

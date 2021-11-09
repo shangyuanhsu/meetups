@@ -41,4 +41,9 @@ export default {
 </script>
 
 <style scoped>
+.login {
+  width: 65%;
+  max-width: 1000px;
+  margin: 40px auto 80px auto;
+}
 </style>
