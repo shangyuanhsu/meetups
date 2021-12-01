@@ -267,6 +267,7 @@ button {
   background-color: #77002e;
   outline: none;
   cursor: pointer;
+   text-align: center;
   transition: all 0.5s;
 }
 button:hover {

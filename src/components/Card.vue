@@ -86,7 +86,11 @@ export default {
 .card p {
   margin: 10px 0;
 }
-
+.card,
+.card h2,
+.card p {
+  text-align: center;
+}
 .card button {
   margin: 20px 0 45px 0;
   font-size: 20px;
