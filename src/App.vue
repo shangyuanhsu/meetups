@@ -1,14 +1,16 @@
 <template>
   <header>
-    <router-link to="/"> <h1>Vue Meetups</h1></router-link>
-    <div id="nav">
-      <router-link to="/All_meetups">All Meetups</router-link> |
-      <router-link to="/AddNew">Add New Meetup</router-link> |
-      <router-link to="/Favorites">My Favorites</router-link>
-      <router-link to="/Login">
-        <img :src="require('./assets/img/member_img/' + member)" />
-      </router-link>
-    </div>
+    <section>
+      <router-link to="/"> <h1>Vue Meetups</h1></router-link>
+      <div id="nav">
+        <router-link to="/All_meetups">All Meetups</router-link> |
+        <router-link to="/AddNew">Add New Meetup</router-link> |
+        <router-link to="/Favorites">My Favorites</router-link>
+        <router-link to="/Login">
+          <img :src="require('./assets/img/member_img/' + member)" />
+        </router-link>
+      </div>
+    </section>
   </header>
   <router-view />
   <Loading v-show="!is_loading" />
@@ -59,11 +61,16 @@ body {
 header {
   background-color: #77002e;
   padding: 30px 50px;
+ 
+}
+header > section{
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: #ffffff;
   margin-bottom: 80px;
+  max-width:1200px;
+  margin: 0 auto;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -27,7 +27,7 @@ const routes = [
     component: All_meetups
   },
   {
-    path: '/CardContent/:path',
+    path: '/CardContent',
     name: 'CardContent',
     component: CardContent,
     // props: true

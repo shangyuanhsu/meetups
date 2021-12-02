@@ -2,7 +2,7 @@
   <div class="all_meetups">
     <HelloWorld msg="All Meetups" />
     <slot v-for="item in getAll_card_data">
-      <router-link :to="`/CardContent/${item.room_id}`">
+      <router-link :to="{ path: '/CardContent', query: { roomId: `${item.room_id}`}}">
         <Card
           :card_title="item.title"
           :card_address="item.address"
